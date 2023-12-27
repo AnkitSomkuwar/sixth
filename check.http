@@ -1,0 +1,17 @@
+GET http://localhost:3009/states
+
+### 
+GET http://localhost:3009/states/20/
+
+### 
+POST http://localhost:3009/states/
+Content-Type : application/json
+{
+  "districtName": "Bagalkot",
+  "stateId": 3,
+  "cases": 2323,
+  "cured": 2000,
+  "active": 315,
+  "deaths": 8
+}
+https://github.com/AnkitSomkuwar/coding-question-6.git
