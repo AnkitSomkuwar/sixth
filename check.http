@@ -1,11 +1,12 @@
-GET http://localhost:3009/states
+GET http://localhost:3000/states/
 
 ### 
-GET http://localhost:3009/states/20/
+GET http://localhost:3000/states/20/
 
 ### 
-POST http://localhost:3009/states/
+POST http://localhost:3000/districts/
 Content-Type : application/json
+
 {
   "districtName": "Bagalkot",
   "stateId": 3,
@@ -14,7 +15,9 @@ Content-Type : application/json
   "active": 315,
   "deaths": 8
 }
-https://github.com/AnkitSomkuwar/coding-question-6.git
-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  
-git remote add origin
-https://github.com/AnkitSomkuwar/sixth.git
+
+###
+GET http://localhost:3000/districts/321/
+
+###
+DELETE http://localhost:3000/districts/321/
