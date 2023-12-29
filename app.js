@@ -17,7 +17,7 @@ const initializeDBAndServer = async () => {
       driver: sqlite3.Database,
     })
     app.listen(3000, () => {
-      console.log('Server Running at http://localhost:3009/')
+      console.log('Server Running at http://localhost:3000/')
     })
   } catch (e) {
     console.log(`DB Error: ${e.message}`)
@@ -30,6 +30,7 @@ initializeDBAndServer()
 const convertDbObjectToResponseObject = dbObject => {
   return {
     stateId: dbObject.state_id,
+    districtId: dbObject.district_id,
     stateName: dbObject.state_name,
     population: dbObject.population,
     districtName: dbObject.district_name,
@@ -70,10 +71,35 @@ app.post('/districts/', async (request, response) => {
   const {districtName, stateId, cases, cured, active, deaths} = request.body
   const addingState = `
   INSERT INTO 
-  district(district_name, state_id, cases, cured, active, deaths)
+  districts(district_name, state_id, cases, cured, active, deaths)
   VALUES (
     ${districtName},'${stateId}','${cases}','${cured}','${active}','${deaths}');`
   await db.run(addingState)
   response.send('District Successfully Added')
 })
+
+//APIs 4
+app.get('/districts/:districtId/', async (request, response) => {
+  const {districtId} = request.params
+  const getDistrict = `
+  SELECT * 
+  FROM district
+  WHERE 
+  district_id = ${districtId} ;`
+  const districtName = await db.get(getDistrict)
+  response.send(convertDbObjectToResponseObject(districtName))
+})
+
+// APIs 5
+app.delete('/districts/:districtId/', async (request, response) => {
+  const {districtId} = request.params
+  const deleteDistrictQuery = `
+  SELECT * 
+  FROM district
+  WHERE 
+  district_id = ${districtId} ;`
+  await db.run(deleteDistrictQuery)
+  response.send('District Removed')
+})
+
 module.exports = app
